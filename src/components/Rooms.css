@@ -1,0 +1,83 @@
+.room,
+.sorting {
+  display: flex;
+  padding: 1em;
+  border: 1px solid transparent;
+}
+
+.room {
+  flex-direction: column;
+  border-bottom-color: #eee;
+  cursor: pointer;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  margin-top: -1px;
+}
+
+.room:hover,
+.room.expanded {
+  position: relative;
+  z-index: 1;
+  border-color: #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,.1);
+}
+
+.room-info,
+.room-availability {
+  display: flex;
+  flex-direction: row;
+}
+
+.room-name {
+  flex: 3;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0 1em .75em 0;
+}
+
+.room-type {
+  flex: 1;
+  font-size: 1.3em;
+}
+
+.room-capacity {
+  flex: 1;
+  font-size: 1.4em;
+  font-weight: bold;
+  text-align: right;
+}
+
+.half-hour {
+  height: 6px;
+  background-color: #ccc;
+  flex: 1;
+}
+
+.half-hour.first {
+  margin-right: 1px;
+}
+
+.half-hour.last {
+  margin-right: 3px;
+}
+
+.half-hour:last-child {
+  margin-right: 0;
+}
+
+div.sorting {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: .5em;
+  padding-top: .5em;
+  border-bottom: 1px solid #ccc;
+  cursor: default;
+}
+
+.sorting .sort-header {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: .35em 0;
+  cursor: pointer;
+}
