@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { toggle } from '../utils/general';
-import { getUniqueRoomKey } from '../utils/rooms';
+import { getUniqueRoomKey } from '../utils/keys';
 import SortTypes from '../utils/sort-types';
 import SortHeader from './SortHeader';
 import Room from './Room';
