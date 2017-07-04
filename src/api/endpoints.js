@@ -39,5 +39,6 @@ export function getBookings({ roomid, siteid, start, end }) {
   })
   .catch(function(error) {
     console.error(error);
+    throw error;
   });
 }
