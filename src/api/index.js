@@ -77,5 +77,5 @@ export function getBookingsForDay(date) {
   //   };
   //
   //   return promise;
-  }
+  // }
 }
