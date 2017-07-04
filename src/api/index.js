@@ -72,7 +72,6 @@ export function getBookingsForDay(date) {
   //   cache[dateKey] = {
   //     pending: true,
   //     invalidated: false,
-  //     bookingsByRoom: [],
   //     requested,
   //     promise
   //   };
