@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from '../moment';
 
 export function getDateKey(date) {
   return moment(date).format("YYYY-MM-DD");
