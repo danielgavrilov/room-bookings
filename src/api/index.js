@@ -6,17 +6,19 @@ import { getDateKey, getUniqueRoomKey } from '../utils/keys';
 
 import todayBookings from '../data/bookings.json';
 
-const CACHE_TODAY_MINUTES = 2;
-const CACHE_DEFAULT_MINUTES = 10;
+const CACHE_TODAY_MINUTES = 2;    // cache in minutes for today's bookings
+const CACHE_DEFAULT_MINUTES = 10; // cache in minutes for any other bookings
+// the reason for this: bookings made on the day can be automatic and can go
+// through immediately
 
 const cache = {};
 
-function expired(dateKey) {
-  if (cache[dateKey] == null) return true;
-  const minutes = getDateKey(new Date()) === dateKey ?
+function expired(time) {
+  if (time == null) return true;
+  const minutes = getDateKey(new Date()) === getDateKey(time) ?
                   CACHE_TODAY_MINUTES :
                   CACHE_DEFAULT_MINUTES;
-  return (new Date() - cache[dateKey].requested) / 1000 / 60 > minutes;
+  return (new Date() - time) / 1000 / 60 > minutes;
 }
 
 function requestBookingsForDay(date) {
@@ -26,44 +28,55 @@ function requestBookingsForDay(date) {
 }
 
 function structureBookings(bookings) {
-  // TODO remove duplication of roomname roomid?
+  // TODO remove duplication of roomname, roomid?
   return R.groupBy(getUniqueRoomKey, bookings);
-}
-
-function cacheBookings(dateKey, bookingsByRoom) {
-  const cacheItem = cache[dateKey];
-  cacheItem.pending = false;
-  cacheItem.bookingsByRoom = bookingsByRoom;
-  return bookingsByRoom;
 }
 
 export function getBookingsForDay(date) {
 
+  // temporarily resolve from local bookings.json
   return new Promise((resolve) => resolve(todayBookings));
 
   // TODO uncomment
 
   // const dateKey = getDateKey(date);
   //
-  // if (cache[dateKey] && cache[dateKey].pending) {
-  //   return cache[dateKey].promise;
-  // } else if (cache[dateKey] && !cache[dateKey].pending && !expired(dateKey)) {
-  //   return new Promise((resolve) => resolve(cache[dateKey].bookingsByRoom));
+  // if (cache[dateKey] && !cache[dateKey].invalidated && !expired(cache[dateKey].requested)) {
+  //   return pending ? cache[dateKey].promise : new Promise((resolve) => resolve(cache[dateKey].bookingsByRoom));
   // } else {
+  //
+  //   const requested = new Date();
   //
   //   const promise = requestBookingsForDay(date)
   //     .then(structureBookings)
   //     .then((bookingsByRoom) => {
-  //        return cacheBookings(dateKey, bookingsByRoom);
-  //      });
+  //       // do not update cache if a newer request has updated it
+  //       // this can happen when a request is invalidated while it's pending
+  //       if (requested >= cache[dateKey].requested) {
+  //         cache[dateKey] = {
+  //           pending: false,
+  //           invalidated: false,
+  //           bookingsByRoom,
+  //           requested,
+  //           promise
+  //         }
+  //       }
+  //       return bookingsByRoom;
+  //     })
+  //     .catch((error) => {
+  //       cache[dateKey].pending = false;
+  //       cache[dateKey].invalidated = true;
+  //       throw error;
+  //     });
   //
   //   cache[dateKey] = {
-  //     date: dateKey,
   //     pending: true,
-  //     requested: new Date(),
+  //     invalidated: false,
+  //     bookingsByRoom: [],
+  //     requested,
   //     promise
   //   };
   //
   //   return promise;
-  // }
+  }
 }
