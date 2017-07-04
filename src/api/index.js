@@ -7,6 +7,8 @@ import { getDateKey, getUniqueRoomKey } from '../utils/keys';
 
 import todayBookings from '../data/bookings.json';
 
+const MAX_RETRIES = 2;
+
 const CACHE_TODAY_MINUTES = 2;    // cache in minutes for today's bookings
 const CACHE_DEFAULT_MINUTES = 10; // cache in minutes for any other bookings
 // the reason for this: bookings made on the day can be automatic and can go
@@ -50,7 +52,7 @@ function structureBookings(bookings) {
   )(bookings);
 }
 
-export function getBookingsForDay(date) {
+export function getBookingsForDay(date, retries=0) {
 
   // temporarily resolve from local bookings.json
   return new Promise((resolve) => resolve(todayBookings));
@@ -87,7 +89,11 @@ export function getBookingsForDay(date) {
   //     .catch((error) => {
   //       cache[dateKey].pending = false;
   //       cache[dateKey].invalidated = true;
-  //       throw error;
+  //       if (retries < MAX_RETRIES) {
+  //         return getBookingsForDay(date, retries + 1);
+  //       } else {
+  //         throw error;
+  //       }
   //     });
   //
   //   cache[dateKey] = {
