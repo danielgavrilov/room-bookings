@@ -27,11 +27,15 @@
   flex-direction: row;
 }
 
+.room-info {
+  margin-bottom: .75em;
+}
+
 .room-name {
   flex: 3;
   font-size: 1.4em;
   font-weight: bold;
-  margin: 0 1em .75em 0;
+  margin: 0 1em 0 0;
 }
 
 .room-type {
