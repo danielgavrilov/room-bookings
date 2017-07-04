@@ -36,9 +36,18 @@ function requestBookingsForDay(date) {
   return getBookings({ start, end });
 }
 
+function types(booking) {
+  booking.start_time = moment(booking.start_time).tz("Europe/London");
+  booking.end_time = moment(booking.end_time).tz("Europe/London");
+  return booking;
+}
+
 function structureBookings(bookings) {
   // TODO remove duplication of roomname, roomid?
-  return R.groupBy(getUniqueRoomKey, bookings);
+  return R.compose(
+    R.groupBy(getUniqueRoomKey),
+    R.map(types)
+  )(bookings);
 }
 
 export function getBookingsForDay(date) {
