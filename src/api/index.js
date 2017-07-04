@@ -1,6 +1,7 @@
 import R from 'ramda';
 import moment from '../moment';
 
+import now from '../utils/now';
 import { getBookings } from './endpoints';
 import { getDateKey, getUniqueRoomKey } from '../utils/keys';
 
@@ -21,17 +22,17 @@ function expired(dateKey) {
   } else if (pending) {
     return false;
   }
-  const today = new Date();
+  const today = now();
   const received = cache[dateKey].received; // time received
   const minutes = getDateKey(today) === dateKey ?
                   CACHE_TODAY_MINUTES :
                   CACHE_DEFAULT_MINUTES;
-  return (new Date() - received) / 1000 / 60 > minutes;
+  return today.diff(received, "minutes") > minutes;
 }
 
 function requestBookingsForDay(date) {
-  const start = moment(date).startOf("day").toDate();
-  const end = moment(date).endOf("day").toDate();
+  const start = date.startOf("day");
+  const end = date.endOf("day");
   return getBookings({ start, end });
 }
 
@@ -55,18 +56,18 @@ export function getBookingsForDay(date) {
   //          new Promise((resolve) => resolve(cache[dateKey].bookingsByRoom));
   // } else {
   //
-  //   const requested = new Date();
+  //   const requested = now();
   //
   //   const promise = requestBookingsForDay(date)
   //     .then(structureBookings)
   //     .then((bookingsByRoom) => {
   //       // do not update cache if a newer request has updated it
   //       // this can happen when a request is invalidated while it's pending
-  //       if (requested >= cache[dateKey].requested) {
+  //       if (requested.diff(cache[dateKey].requested) >= 0) {
   //         cache[dateKey] = {
   //           pending: false,
   //           invalidated: false,
-  //           received: new Date(),
+  //           received: now(),
   //           bookingsByRoom,
   //           requested,
   //           promise

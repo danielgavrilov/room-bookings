@@ -31,8 +31,8 @@ export function getBookings({ roomid, siteid, start, end }) {
   return getAll("/bookings", {
     roomid,
     siteid,
-    start_datetime: start.toISOString(),
-    end_datetime: end.toISOString()
+    start_datetime: start.format(),
+    end_datetime: end.format()
   })
   .then((dataArray) => {
     return R.flatten(dataArray.map((data) => data.bookings));
