@@ -19,7 +19,7 @@ function expired(dateKey) {
       cache[dateKey].invalidated ||
       !cache[dateKey].pending && !cache[dateKey].received) {
     return true;
-  } else if (pending) {
+  } else if (cache[dateKey].pending) {
     return false;
   }
   const today = now();
@@ -31,8 +31,8 @@ function expired(dateKey) {
 }
 
 function requestBookingsForDay(date) {
-  const start = date.startOf("day");
-  const end = date.endOf("day");
+  const start = date.clone().startOf("day");
+  const end = date.clone().endOf("day");
   return getBookings({ start, end });
 }
 
