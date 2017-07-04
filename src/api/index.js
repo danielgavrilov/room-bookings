@@ -13,12 +13,20 @@ const CACHE_DEFAULT_MINUTES = 10; // cache in minutes for any other bookings
 
 const cache = {};
 
-function expired(time) {
-  if (time == null) return true;
-  const minutes = getDateKey(new Date()) === getDateKey(time) ?
+function expired(dateKey) {
+  if (cache[dateKey] == null ||
+      cache[dateKey].invalidated ||
+      !cache[dateKey].pending && !cache[dateKey].received) {
+    return true;
+  } else if (pending) {
+    return false;
+  }
+  const today = new Date();
+  const received = cache[dateKey].received; // time received
+  const minutes = getDateKey(today) === dateKey ?
                   CACHE_TODAY_MINUTES :
                   CACHE_DEFAULT_MINUTES;
-  return (new Date() - time) / 1000 / 60 > minutes;
+  return (new Date() - received) / 1000 / 60 > minutes;
 }
 
 function requestBookingsForDay(date) {
@@ -41,8 +49,10 @@ export function getBookingsForDay(date) {
 
   // const dateKey = getDateKey(date);
   //
-  // if (cache[dateKey] && !cache[dateKey].invalidated && !expired(cache[dateKey].requested)) {
-  //   return pending ? cache[dateKey].promise : new Promise((resolve) => resolve(cache[dateKey].bookingsByRoom));
+  // if (cache[dateKey] && !cache[dateKey].invalidated && !expired(dateKey)) {
+  //   return cache[dateKey].pending ?
+  //          cache[dateKey].promise :
+  //          new Promise((resolve) => resolve(cache[dateKey].bookingsByRoom));
   // } else {
   //
   //   const requested = new Date();
@@ -56,6 +66,7 @@ export function getBookingsForDay(date) {
   //         cache[dateKey] = {
   //           pending: false,
   //           invalidated: false,
+  //           received: new Date(),
   //           bookingsByRoom,
   //           requested,
   //           promise
