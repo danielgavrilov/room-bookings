@@ -1,8 +1,11 @@
+import moment from '../moment';
 import React from 'react';
+import PropTypes from 'prop-types';
 
+import Availability from './Availability';
 import getClassificationName from '../utils/classification-name';
 
-const Room = ({ room }) => {
+const Room = ({ date, room, bookings }) => {
   const {
     roomname,
     capacity,
@@ -22,42 +25,14 @@ const Room = ({ room }) => {
         <div className="room-capacity">{capacity}</div>
       </div>
 
-      <div className="room-availability">
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-        <div className="half-hour first"></div>
-        <div className="half-hour last"></div>
-      </div>
+      <Availability />
+
     </div>
   )
+}
+
+Room.propTypes = {
+  date: PropTypes.instanceOf(moment)
 }
 
 export default Room;
