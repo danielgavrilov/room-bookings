@@ -97,6 +97,7 @@ class Rooms extends Component {
 
   sortHandler(property) {
     return () => {
+      window.dispatchEvent(new CustomEvent("refreshViewport"));
       this.sortBy(property);
     }
   }
