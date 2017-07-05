@@ -64,7 +64,7 @@ class Room extends Component {
                         scrollCheck={true}
                         scrollThrottle={50}
                         intervalCheck={true}
-                        intervalDelay={5000}
+                        intervalDelay={3000}
                         offset={{ top: -1000, bottom: -1000 }}>
         <div className="room">
 
