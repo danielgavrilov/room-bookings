@@ -46,7 +46,13 @@ const Room = ({
 }
 
 Room.propTypes = {
-  date: PropTypes.instanceOf(moment)
-}
+  date: PropTypes.instanceOf(moment),
+  room: PropTypes.object,
+  loading: PropTypes.bool,
+  closedAllDay: PropTypes.bool,
+  opens: PropTypes.instanceOf(moment),
+  closes: PropTypes.instanceOf(moment),
+  bookings: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default Room;
