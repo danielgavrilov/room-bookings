@@ -1,4 +1,3 @@
-import R from 'ramda';
 import moment from '../moment';
 
 import { getBookings } from './endpoints';
