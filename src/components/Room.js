@@ -1,7 +1,7 @@
 import moment from '../moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import VisibilitySensor from 'react-visibility-sensor';
+import VisibilitySensor from './VisibilitySensor';
 
 import Availability from './Availability';
 import getClassificationName from '../utils/classification-name';
