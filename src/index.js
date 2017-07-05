@@ -7,16 +7,17 @@ import moment from './moment';
 
 import App from './components/App';
 import rootReducer from './reducers';
+import { fetchBookings } from './actions';
 
 import './index.css';
 
-const today = moment().startOf("day");
+const today = moment().startOf("day"); // today at 00:00
 
 const initialState = {
   active: false,
   loading: false,
   error: null,
-  date: today, // today at 00:00
+  date: today,
   hours: 1.0,
   between: [],
   capacity: [],
@@ -35,3 +36,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+store.dispatch(fetchBookings(today));
