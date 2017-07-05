@@ -3,6 +3,21 @@
   margin: 0 auto;
 }
 
+.error {
+  background-color: #f6e2e2;
+  border: 1px solid #db9d9d;
+  color: #9f3030;
+  padding: 1em;
+  border-radius: 2px;
+  margin-bottom: 1em;
+}
+
+.error p {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin: 0;
+}
+
 header h1 {
   font-size: 1.8em;
   font-weight: bold;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Rooms from './Rooms';
 import Search from './Search';
@@ -8,6 +9,7 @@ import './App.css';
 
 class App extends Component {
   render() {
+    const { error } = this.props;
     return (
       <div className="container">
 
@@ -16,6 +18,13 @@ class App extends Component {
         </header>
 
         <Search />
+
+        { error ?
+          <div className="error">
+            <p>Encountered error: {error.message || error.toString()}</p>
+          </div> :
+          null
+        }
 
         <Rooms rooms={rooms} />
 
@@ -33,4 +42,12 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    error: state.error
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(App);
