@@ -103,7 +103,7 @@ class Rooms extends Component {
 
   sortBy(property) {
     const sortOrder = (this.state.sortBy === property) ?
-                      toggle(this.state.sortOrder, Object.values(SortTypes)) :
+                      toggle(this.state.sortOrder, R.values(SortTypes)) :
                       SortTypes.ASC;
     this.setState({
       sortBy: property,

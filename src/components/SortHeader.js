@@ -1,3 +1,4 @@
+import R from 'ramda';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,7 +18,7 @@ const SortHeader = ({ name, order, className, onClick }) => {
 
 SortHeader.propTypes = {
   name: PropTypes.string,
-  order: PropTypes.oneOf(Object.values(SortTypes)),
+  order: PropTypes.oneOf(R.values(SortTypes)),
   className: PropTypes.string,
   onClick: PropTypes.func
 }
