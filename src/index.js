@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import moment from './moment';
 
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
@@ -10,7 +11,19 @@ import rootReducer from './reducers';
 
 import './index.css';
 
-const initialState = {};
+const today = moment().startOf("day");
+
+const initialState = {
+  active: false,
+  loading: false,
+  error: null,
+  date: today, // today at 00:00
+  hours: 1.0,
+  between: [],
+  capacity: [],
+  bookingsByRoom: {}
+};
+
 const store = createStore(
   rootReducer,
   initialState,
