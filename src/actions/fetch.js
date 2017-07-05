@@ -1,4 +1,4 @@
-import { getBookingsForDay } from '../api';
+import { getBookingsForDay } from '../bookings';
 import { makeAction } from './utils';
 
 export const FETCH_BOOKINGS_REQUEST = "FETCH_BOOKINGS_REQUEST";

@@ -1,8 +1,8 @@
 import moment from '../moment';
 
-import { getBookings } from './endpoints';
+import { getBookings } from './api';
 import { getDateKey } from '../utils/keys';
-import structureBookings from './structure-bookings';
+import structure from './structure';
 
 import todayBookings from '../data/bookings.json';
 
@@ -41,7 +41,7 @@ export function getBookingsForDay(date, retries=0) {
 
   // temporarily resolve from local bookings.json
   return new Promise((resolve) => {
-    setTimeout(() => resolve(structureBookings(date, todayBookings)), 1000);
+    setTimeout(() => resolve(structure(date, todayBookings)), 1000);
   });
 
   // TODO uncomment
@@ -57,7 +57,7 @@ export function getBookingsForDay(date, retries=0) {
   //   const requested = moment();
   //
   //   const promise = requestBookingsForDay(date)
-  //     .then((bookings) => structureBookings(date, bookings))
+  //     .then((bookings) => structure(date, bookings))
   //     .then((roomDiaries) => {
   //       // do not update cache if a newer request has updated it
   //       // this can happen when a request is invalidated while it's pending
