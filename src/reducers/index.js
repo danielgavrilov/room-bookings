@@ -23,7 +23,6 @@ export default function(state, action) {
 
     case FETCH_BOOKINGS_SUCCESS:
       if (action.date.isSame(state.date, "day")) {
-        console.log(action.roomDiaries);
         return {
           ...state,
           loading: false,
