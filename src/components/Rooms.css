@@ -1,6 +1,5 @@
 .room,
 .sorting {
-  display: flex;
   padding: 1em;
   border: 1px solid transparent;
 }
