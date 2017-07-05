@@ -1,3 +1,11 @@
+.loading .room-availability {
+  opacity: .3;
+}
+
+.loading .room:nth-child(-n+10) .room-availability {
+  opacity: 1;
+}
+
 @keyframes pulse1 {
   0%, 50%, 100% { opacity: 0.3; }
   25%      { opacity: 0.8; }
@@ -53,9 +61,8 @@
   animation-timing-function: linear;
   animation-direction: normal;
   animation-iteration-count: infinite;
-  animation-fill-mode: none;
+  animation-fill-mode: backwards;
   animation-play-state: running;
-  opacity: .3;
 }
 
 .loading .room:nth-child(1) .half-hour { animation-name: pulse1; }
