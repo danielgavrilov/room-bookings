@@ -83,6 +83,7 @@ const Search = ({
         onDayClick={selectDate}
         selectedDays={[date.toDate()]}
         enableOutsideDays
+        firstDayOfWeek={1}
       />
     </div>
   </div>
