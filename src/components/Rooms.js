@@ -5,98 +5,63 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from '../moment';
 
+import rooms from '../data/rooms.json';
 import { toggle } from '../utils/general';
 import { getUniqueRoomKey } from '../utils/keys';
-import SortTypes from '../utils/sort-types';
+import SortOrder from '../utils/sort-order';
+import SortBy from '../utils/sort-by.js';
 import SortHeader from './SortHeader';
+import RoomList from './RoomList';
 import Room from './Room';
 
 import './Rooms.css';
 
-const SortBy = {
-  NAME: "roomname",
-  CLASSIFICATION: "classification",
-  CAPACITY: "capacity"
-}
-
 class Rooms extends Component {
-
-  static propTypes = {
-    rooms: PropTypes.arrayOf(PropTypes.object).isRequired,
-    bounds: PropTypes.arrayOf(moment)
-  }
 
   constructor(props) {
     super(props);
     this.state = {
       sortBy: SortBy.NAME,
-      sortOrder: SortTypes.ASC
+      sortOrder: SortOrder.ASC
     };
-  }
-
-  sortedRooms() {
-
-    const { rooms } = this.props;
-    const { sortBy, sortOrder } = this.state;
-
-    let sortedRooms = rooms;
-
-    if (sortBy !== null && sortOrder !== null) {
-      const comparator = sortOrder === SortTypes.ASC ? R.ascend : R.descend;
-      sortedRooms = R.sortWith([
-        comparator(R.prop(sortBy)),
-        R.ascend(R.prop(SortBy.NAME)) // always use room name as secondary sort
-      ], sortedRooms);
-    }
-
-    return sortedRooms;
-  }
-
-  roomComponents() {
-    const { date, roomDiaries } = this.props;
-    return this.sortedRooms().map((room) => {
-      const key = getUniqueRoomKey(room);
-      const props = roomDiaries[key] != null ?
-                    roomDiaries[key] :
-                    { loading: true };
-      return (
-        <Room key={key}
-              date={date}
-              room={room}
-              {...props} />
-      );
-    });
   }
 
   render() {
 
+    const { loading, roomDiaries, between } = this.props;
     const { sortBy, sortOrder } = this.state;
 
     return (
       <div>
         <div className="sorting">
           <SortHeader name="Room name"
-                      order={sortBy === SortBy.NAME ? sortOrder : null}
+                      sortOrder={sortBy === SortBy.NAME ? sortOrder : null}
                       className="room-name"
                       onClick={this.sortHandler(SortBy.NAME)} />
           <SortHeader name="Type"
-                      order={sortBy === SortBy.CLASSIFICATION ? sortOrder : null}
+                      sortOrder={sortBy === SortBy.CLASSIFICATION ? sortOrder : null}
                       className="room-type"
                       onClick={this.sortHandler(SortBy.CLASSIFICATION)} />
           <SortHeader name="Capacity"
-                      order={sortBy === SortBy.CAPACITY ? sortOrder : null}
+                      sortOrder={sortBy === SortBy.CAPACITY ? sortOrder : null}
                       className="room-capacity"
                       onClick={this.sortHandler(SortBy.CAPACITY)} />
         </div>
-        <div className={classNames("rooms", { loading: this.props.loading })}>
-          {this.roomComponents()}
-        </div>
+
+        <RoomList className={classNames("rooms", { loading: this.props.loading })}
+                  rooms={rooms}
+                  roomDiaries={roomDiaries}
+                  sortBy={sortBy}
+                  sortOrder={sortOrder}
+                  between={between}
+                  loading={loading} />
       </div>
     )
   }
 
   sortHandler(property) {
     return () => {
+      // fire 'refreshViewport' to force VisibilitySensor update
       window.dispatchEvent(new CustomEvent("refreshViewport"));
       this.sortBy(property);
     }
@@ -104,8 +69,8 @@ class Rooms extends Component {
 
   sortBy(property) {
     const sortOrder = (this.state.sortBy === property) ?
-                      toggle(this.state.sortOrder, R.values(SortTypes)) :
-                      SortTypes.ASC;
+                      toggle(this.state.sortOrder, R.values(SortOrder)) :
+                      SortOrder.ASC;
     this.setState({
       sortBy: property,
       sortOrder
@@ -115,12 +80,13 @@ class Rooms extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { active, date, loading, roomDiaries } = state;
+  const { active, date, loading, roomDiaries, between } = state;
   return {
     active,
     date,
     loading,
-    roomDiaries
+    roomDiaries,
+    between
   };
 }
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Rooms from './Rooms';
 import Search from './Search';
-import rooms from '../data/rooms.json';
 
 import './App.css';
 
@@ -26,7 +25,7 @@ class App extends Component {
           null
         }
 
-        <Rooms rooms={rooms} />
+        <Rooms />
 
         <footer>
           <p>
