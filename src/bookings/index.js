@@ -39,57 +39,50 @@ function requestBookingsForDay(date) {
 
 export function getBookingsForDay(date, retries=0) {
 
-  // temporarily resolve from local bookings.json
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(structure(date, todayBookings)), 1000);
-  });
+  const dateKey = getDateKey(date);
 
-  // TODO uncomment
+  if (cache[dateKey] && !cache[dateKey].invalidated && !expired(dateKey)) {
+    return cache[dateKey].pending ?
+           cache[dateKey].promise :
+           new Promise((resolve) => resolve(cache[dateKey].roomDiaries));
+  } else {
 
-  // const dateKey = getDateKey(date);
-  //
-  // if (cache[dateKey] && !cache[dateKey].invalidated && !expired(dateKey)) {
-  //   return cache[dateKey].pending ?
-  //          cache[dateKey].promise :
-  //          new Promise((resolve) => resolve(cache[dateKey].roomDiaries));
-  // } else {
-  //
-  //   const requested = moment();
-  //
-  //   const promise = requestBookingsForDay(date)
-  //     .then((bookings) => structure(date, bookings))
-  //     .then((roomDiaries) => {
-  //       // do not update cache if a newer request has updated it
-  //       // this can happen when a request is invalidated while it's pending
-  //       if (requested.diff(cache[dateKey].requested) >= 0) {
-  //         cache[dateKey] = {
-  //           pending: false,
-  //           invalidated: false,
-  //           received: moment(),
-  //           roomDiaries,
-  //           requested,
-  //           promise
-  //         }
-  //       }
-  //       return roomDiaries;
-  //     })
-  //     .catch((error) => {
-  //       cache[dateKey].pending = false;
-  //       cache[dateKey].invalidated = true;
-  //       if (retries < MAX_RETRIES) {
-  //         return getBookingsForDay(date, retries + 1);
-  //       } else {
-  //         throw error;
-  //       }
-  //     });
-  //
-  //   cache[dateKey] = {
-  //     pending: true,
-  //     invalidated: false,
-  //     requested,
-  //     promise
-  //   };
-  //
-  //   return promise;
-  // }
+    const requested = moment();
+
+    const promise = requestBookingsForDay(date)
+      .then((bookings) => structure(date, bookings))
+      .then((roomDiaries) => {
+        // do not update cache if a newer request has updated it
+        // this can happen when a request is invalidated while it's pending
+        if (requested.diff(cache[dateKey].requested) >= 0) {
+          cache[dateKey] = {
+            pending: false,
+            invalidated: false,
+            received: moment(),
+            roomDiaries,
+            requested,
+            promise
+          }
+        }
+        return roomDiaries;
+      })
+      .catch((error) => {
+        cache[dateKey].pending = false;
+        cache[dateKey].invalidated = true;
+        if (retries < MAX_RETRIES) {
+          return getBookingsForDay(date, retries + 1);
+        } else {
+          throw error;
+        }
+      });
+
+    cache[dateKey] = {
+      pending: true,
+      invalidated: false,
+      requested,
+      promise
+    };
+
+    return promise;
+  }
 }
