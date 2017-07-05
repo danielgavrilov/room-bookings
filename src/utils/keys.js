@@ -1,6 +1,5 @@
 export function getDateKey(date) {
-  return date.tz("Europe/London")
-             .format("YYYY-MM-DD");
+  return date.format("YYYY-MM-DD");
 }
 
 export function getUniqueRoomKey({ roomid, siteid }) {
