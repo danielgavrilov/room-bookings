@@ -18,7 +18,7 @@ const cache = {};
 function expired(dateKey) {
   if (cache[dateKey] == null ||
       cache[dateKey].invalidated ||
-      !cache[dateKey].pending && !cache[dateKey].received) {
+      (!cache[dateKey].pending && !cache[dateKey].received)) {
     return true;
   } else if (cache[dateKey].pending) {
     return false;
