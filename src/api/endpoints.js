@@ -13,10 +13,10 @@ function get(url, params) {
   }).then((response) => response.data);
 }
 
-function getAll(url, params) {
+function getAllPages(url, params) {
   return get(url, params).then((data) => {
     if (data.next_page_exists) {
-      return getAll(url, {
+      return getAllPages(url, {
         page_token: data.page_token
       }).then((dataArray) => {
         return [data].concat(dataArray);
@@ -28,7 +28,7 @@ function getAll(url, params) {
 }
 
 export function getBookings({ roomid, siteid, start, end }) {
-  return getAll("/bookings", {
+  return getAllPages("/bookings", {
     roomid,
     siteid,
     start_datetime: start.format(),
