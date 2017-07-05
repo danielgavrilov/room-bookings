@@ -9,7 +9,7 @@ function types(booking) {
   return booking;
 }
 
-export default function structureBookings(bookings) {
+export default function structureBookings(date, bookings) {
   // TODO remove duplication of roomname, roomid?
   return R.compose(
     R.groupBy(getUniqueRoomKey),

@@ -42,7 +42,7 @@ export function getBookingsForDay(date, retries=0) {
 
   // temporarily resolve from local bookings.json
   return new Promise((resolve) => {
-    setTimeout(() => resolve(todayBookings), 1000);
+    setTimeout(() => resolve(structureBookings(date, todayBookings)), 1000);
   });
 
   // TODO uncomment
@@ -58,7 +58,7 @@ export function getBookingsForDay(date, retries=0) {
   //   const requested = moment();
   //
   //   const promise = requestBookingsForDay(date)
-  //     .then(structureBookings)
+  //     .then((bookings) => structureBookings(date, bookings))
   //     .then((bookingsByRoom) => {
   //       // do not update cache if a newer request has updated it
   //       // this can happen when a request is invalidated while it's pending
