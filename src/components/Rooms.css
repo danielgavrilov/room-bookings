@@ -49,24 +49,6 @@
   text-align: right;
 }
 
-.half-hour {
-  height: 6px;
-  background-color: #ccc;
-  flex: 1;
-}
-
-.half-hour.first {
-  margin-right: 1px;
-}
-
-.half-hour.last {
-  margin-right: 3px;
-}
-
-.half-hour:last-child {
-  margin-right: 0;
-}
-
 div.sorting {
   display: flex;
   flex-direction: row;
@@ -83,4 +65,68 @@ div.sorting {
   margin-bottom: 0;
   padding: .35em 0;
   cursor: pointer;
+}
+
+.bar {
+  height: 6px;
+  width: 100%;
+  background-color: #ddd;
+  margin: 0 -1px;
+  position: relative;
+}
+
+.hour-tick,
+.half-hour-tick {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.hour-tick {
+  width: 2px;
+  margin-left: -1px;
+}
+
+.half-hour-tick {
+  width: 1px;
+  margin-left: -1px;
+}
+
+/*
+  Bar loading animation
+ */
+
+@keyframes move-gradient {
+  0% { background-position: 40% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.loading .bar {
+  background-color: #eee;
+}
+
+.loading .room:nth-child(1) .bar { background: linear-gradient(to right, #eee, #cccccc 10%, #eee 20%, #eee); }
+.loading .room:nth-child(2) .bar { background: linear-gradient(to right, #eee, #cfcfcf 10%, #eee 20%, #eee); }
+.loading .room:nth-child(3) .bar { background: linear-gradient(to right, #eee, #d3d3d3 10%, #eee 20%, #eee); }
+.loading .room:nth-child(4) .bar { background: linear-gradient(to right, #eee, #d6d6d6 10%, #eee 20%, #eee); }
+.loading .room:nth-child(5) .bar { background: linear-gradient(to right, #eee, #dadada 10%, #eee 20%, #eee); }
+.loading .room:nth-child(6) .bar { background: linear-gradient(to right, #eee, #dddddd 10%, #eee 20%, #eee); }
+.loading .room:nth-child(7) .bar { background: linear-gradient(to right, #eee, #e0e0e0 10%, #eee 20%, #eee); }
+.loading .room:nth-child(8) .bar { background: linear-gradient(to right, #eee, #e4e4e4 10%, #eee 20%, #eee); }
+.loading .room:nth-child(9) .bar { background: linear-gradient(to right, #eee, #e7e7e7 10%, #eee 20%, #eee); }
+.loading .room:nth-child(10) .bar { background: linear-gradient(to right, #eee, #ebebeb 10%, #eee 20%, #eee); }
+
+.loading .room:nth-child(-n+10) .bar {
+  background-size: 200% 100%;
+  background-repeat: repeat-x;
+  animation-name: move-gradient;
+  animation-delay: 100ms;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-fill-mode: backwards;
+  animation-play-state: running;
 }

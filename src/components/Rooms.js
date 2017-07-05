@@ -12,7 +12,6 @@ import SortHeader from './SortHeader';
 import Room from './Room';
 
 import './Rooms.css';
-import './loading.css';
 
 const SortBy = {
   NAME: "roomname",
