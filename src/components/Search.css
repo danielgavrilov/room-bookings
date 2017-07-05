@@ -13,6 +13,12 @@
   flex: 0;
 }
 
+@media (max-width: 35em) {
+  .search-form {
+    flex-direction: column;
+  }
+}
+
 .DayPicker-Day {
   background-color: transparent;
   transition: background-color 100ms linear;
