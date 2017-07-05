@@ -7,7 +7,7 @@ const START = 8;
 const END = 24;
 
 function scaleTime(time) {
-  const hours = time.seconds() / 3600;
+  const hours = time.hours() + time.minutes() / 60 + time.seconds() / 3600;
   return scaleHours(hours);
 }
 
@@ -27,7 +27,43 @@ class Availability extends Component {
     closedAllDay: PropTypes.bool,
     opens: PropTypes.instanceOf(moment),
     closes: PropTypes.instanceOf(moment),
-    bookings: PropTypes.arrayOf(PropTypes.object)
+    bookings: PropTypes.arrayOf(PropTypes.object),
+    available: PropTypes.arrayOf(PropTypes.object)
+  }
+
+  // an event is either 'booking' or 'available'
+  plot(events, keyFunc, className="events", childClassName="event") {
+    const eventComponents = events.map((event) => {
+      const key = keyFunc(event);
+      const left = scaleTime(event.start_time);
+      const width = scaleTime(event.end_time) - left;
+      return (
+        <div key={key} className={childClassName} style={{ left: perc(left), width: perc(width) }}></div>
+      );
+    });
+    return (
+      <div className={className}>
+        {eventComponents}
+      </div>
+    )
+  }
+
+  bookings() {
+    const { closedAllDay, bookings } = this.props;
+    if (closedAllDay === false && bookings) {
+      const keyFunc = (booking) => `${booking.siteid}-${booking.slotid}-${booking.weeknumber}`;
+      return this.plot(bookings, keyFunc, "bookings", "booking");
+    }
+    return null;
+  }
+
+  availableIntervals() {
+    const { closedAllDay, available } = this.props;
+    if (closedAllDay === false && available) {
+      const keyFunc = (interval) => `${interval.start_time.format("HH:mm")}-${interval.end_time.format("HH:mm")}`;
+      return this.plot(available, keyFunc, "available-intervals", "available");
+    }
+    return null;
   }
 
   ticks() {
@@ -44,10 +80,11 @@ class Availability extends Component {
   }
 
   render() {
-
     return (
       <div className="room-availability">
         <div className="bar">
+          {this.availableIntervals()}
+          {this.bookings()}
           {this.ticks()}
         </div>
       </div>

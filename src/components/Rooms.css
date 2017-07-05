@@ -70,17 +70,32 @@ div.sorting {
 .bar {
   height: 6px;
   width: 100%;
-  background-color: #ddd;
+  background-color: #f1f1f1;
   margin: 0 -1px;
   position: relative;
+  overflow: hidden;
+}
+
+.booking,
+.available,
+.hour-tick,
+.half-hour-tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.booking {
+  background-color: #bebebe;
+}
+
+.available {
+  background-color: #2ab12a;
 }
 
 .hour-tick,
 .half-hour-tick {
   background-color: white;
-  position: absolute;
-  top: 0;
-  bottom: 0;
   z-index: 1;
 }
 
@@ -105,6 +120,11 @@ div.sorting {
 
 .loading .bar {
   background-color: #eee;
+}
+
+.loading .booking,
+.loading .available {
+  opacity: .3;
 }
 
 .loading .room:nth-child(1) .bar { background: linear-gradient(to right, #eee, #cccccc 10%, #eee 20%, #eee); }

@@ -12,7 +12,8 @@ const Room = ({
   closedAllDay,
   opens,
   closes,
-  bookings
+  bookings,
+  available
 }) => {
 
   const {
@@ -39,7 +40,8 @@ const Room = ({
                     closedAllDay={closedAllDay}
                     opens={opens}
                     closes={closes}
-                    bookings={bookings} />
+                    bookings={bookings}
+                    available={available} />
 
     </div>
   )
@@ -52,7 +54,8 @@ Room.propTypes = {
   closedAllDay: PropTypes.bool,
   opens: PropTypes.instanceOf(moment),
   closes: PropTypes.instanceOf(moment),
-  bookings: PropTypes.arrayOf(PropTypes.object)
+  bookings: PropTypes.arrayOf(PropTypes.object),
+  available: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Room;
