@@ -1,61 +1,92 @@
 import moment from '../moment';
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import Availability from './Availability';
 import getClassificationName from '../utils/classification-name';
 
-const Room = ({
-  date,
-  room,
-  loading,
-  closedAllDay,
-  opens,
-  closes,
-  bookings,
-  available
-}) => {
+class Room extends Component {
 
-  const {
-    roomname,
-    capacity,
-    classification
-  } = room;
+  static propTypes = {
+    date: PropTypes.instanceOf(moment),
+    room: PropTypes.object,
+    loading: PropTypes.bool,
+    closedAllDay: PropTypes.bool,
+    opens: PropTypes.instanceOf(moment),
+    closes: PropTypes.instanceOf(moment),
+    bookings: PropTypes.arrayOf(PropTypes.object),
+    available: PropTypes.arrayOf(PropTypes.object)
+  }
 
-  // attempt to find description for acronym
-  // if none exists default to acronym, e.g. LT for Lecture Theatre
-  const type = getClassificationName(classification);
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: true
+    }
+  }
 
-  return (
-    <div className="room">
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.visible;
+  }
 
-      <div className="room-info">
-        <h3 className="room-name">{roomname}</h3>
-        <div className="room-type">{type}</div>
-        <div className="room-capacity">{capacity}</div>
-      </div>
+  onVisible(visible) {
+    const roomname = this.props.room.roomname;
+    this.setState({ visible });
+  }
 
-      <Availability date={date}
-                    loading={loading}
-                    closedAllDay={closedAllDay}
-                    opens={opens}
-                    closes={closes}
-                    bookings={bookings}
-                    available={available} />
+  render() {
 
-    </div>
-  )
+    const {
+      date,
+      room,
+      loading,
+      closedAllDay,
+      opens,
+      closes,
+      bookings,
+      available
+    } = this.props;
+
+    const {
+      roomname,
+      capacity,
+      classification
+    } = room;
+
+    // attempt to find description for acronym
+    // if none exists default to acronym, e.g. LT for Lecture Theatre
+    const type = getClassificationName(classification);
+
+    return (
+      <VisibilitySensor onChange={this.onVisible.bind(this)}
+                        partialVisibility={true}
+                        scrollCheck={true}
+                        scrollThrottle={50}
+                        intervalCheck={true}
+                        intervalDelay={5000}
+                        offset={{ top: -1000, bottom: -1000 }}>
+        <div className="room">
+
+          <div className="room-info">
+            <h3 className="room-name">{roomname}</h3>
+            <div className="room-type">{type}</div>
+            <div className="room-capacity">{capacity}</div>
+          </div>
+
+          <Availability date={date}
+                        loading={loading}
+                        closedAllDay={closedAllDay}
+                        opens={opens}
+                        closes={closes}
+                        bookings={bookings}
+                        available={available} />
+
+        </div>
+      </VisibilitySensor>
+    )
+  }
+
 }
-
-Room.propTypes = {
-  date: PropTypes.instanceOf(moment),
-  room: PropTypes.object,
-  loading: PropTypes.bool,
-  closedAllDay: PropTypes.bool,
-  opens: PropTypes.instanceOf(moment),
-  closes: PropTypes.instanceOf(moment),
-  bookings: PropTypes.arrayOf(PropTypes.object),
-  available: PropTypes.arrayOf(PropTypes.object)
-};
 
 export default Room;
