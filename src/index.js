@@ -6,7 +6,6 @@ import thunk from 'redux-thunk';
 import moment from './moment';
 
 import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './reducers';
 
 import './index.css';
@@ -36,5 +35,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-
-// registerServiceWorker();
