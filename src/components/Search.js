@@ -18,13 +18,14 @@ const Search = ({
   active,
   date,
   between,
-  selectDate
+  selectDate,
+  selectHours
 }) => (
   <div className="search-form">
     <div className="textual">
       <form id="search" className="search-form">
         I need a room for
-        <select name="hours" id="hours" defaultValue="...">
+        <select name="hours" id="hours" defaultValue="..." onChange={selectHours}>
           <option value="...">...</option>
           <option value="00:30">30min</option>
           <option value="01:00">1h</option>
@@ -104,6 +105,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       date = moment(date).startOf("day");
       dispatch(searchDate(date));
       dispatch(fetchBookings(date));
+    },
+    selectHours: (event) => {
+      const value = event.target.value;
+      const hours = moment.duration(value);
+      dispatch(searchHours(hours));
     }
   };
 }
