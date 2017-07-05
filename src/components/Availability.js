@@ -6,6 +6,19 @@ import PropTypes from 'prop-types';
 const START = 8;
 const END = 24;
 
+function scaleTime(time) {
+  const hours = time.seconds() / 3600;
+  return scaleHours(hours);
+}
+
+function scaleHours(hours) {
+  return (hours - START) / (END - START);
+}
+
+function perc(fraction) {
+  return (fraction * 100) + "%";
+}
+
 class Availability extends Component {
 
   static propTypes = {
@@ -20,11 +33,11 @@ class Availability extends Component {
   ticks() {
     return (
       <div className="ticks">
-        {R.range(1,END-START).map((i) => (
-          <div key={"hour-"+i} className="hour-tick" style={{ left: `${i/(END-START)*100}%` }}></div>
+        {R.range(START+1, END).map((h) => (
+          <div key={"hour-"+h} className="hour-tick" style={{ left: perc(scaleHours(h)) }}></div>
         ))}
-        {R.range(0,END-START).map((i) => (
-          <div key={"half-hour-"+i} className="half-hour-tick" style={{ left: `${(i+0.5)/(END-START)*100}%` }}></div>
+        {R.range(START, END).map((h) => h + 0.5).map((h) => (
+          <div key={"half-hour-"+h} className="half-hour-tick" style={{ left: perc(scaleHours(h)) }}></div>
         ))}
       </div>
     )
