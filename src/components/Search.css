@@ -1,4 +1,53 @@
 .search-form {
+  display: flex;
   font-size: 1.3em;
   text-align: center;
+  flex-direction: row;
+}
+
+.textual {
+  flex: 1;
+}
+
+.calendar {
+  flex: 0;
+}
+
+.DayPicker-Day {
+  background-color: transparent;
+  transition: background-color 100ms linear;
+}
+
+.DayPicker-Day:hover,
+.DayPicker-Day:focus {
+  background-color: #f3f3f3;
+  outline: none;
+}
+
+.DayPicker-Day--outside:hover {
+  background-color: transparent !important;
+}
+
+.DayPicker-Month {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.DayPicker-Weekday abbr {
+  text-decoration: none;
+}
+
+.DayPicker-Caption {
+  line-height: 1.5rem;
+}
+
+.DayPicker-NavButton {
+  opacity: .6;
+  transition: opacity 100ms linear;
+  outline: none;
+}
+
+.DayPicker-NavButton:hover,
+.DayPicker-NavButton:focus {
+  opacity: 1;
 }
