@@ -35,9 +35,9 @@ class Rooms extends Component {
     };
   }
 
-  render() {
+  sortedRooms() {
 
-    const { date, loading, rooms, bounds, bookingsByRoom } = this.props;
+    const { rooms } = this.props;
     const { sortBy, sortOrder } = this.state;
 
     let sortedRooms = rooms;
@@ -50,16 +50,28 @@ class Rooms extends Component {
       ], sortedRooms);
     }
 
-    const roomComponents = sortedRooms.map((room) => {
+    return sortedRooms;
+  }
+
+  roomComponents() {
+    const { date, roomDiaries } = this.props;
+    return this.sortedRooms().map((room) => {
       const key = getUniqueRoomKey(room);
-      const bookings = bookingsByRoom[key];
+      const props = roomDiaries[key] != null ?
+                    roomDiaries[key] :
+                    { loading: true };
       return (
         <Room key={key}
               date={date}
               room={room}
-              bookings={bookings} />
+              {...props} />
       );
     });
+  }
+
+  render() {
+
+    const { sortBy, sortOrder } = this.state;
 
     return (
       <div>
@@ -67,30 +79,30 @@ class Rooms extends Component {
           <SortHeader name="Room name"
                       order={sortBy === SortBy.NAME ? sortOrder : null}
                       className="room-name"
-                      onClick={this._sortHandler(SortBy.NAME)} />
+                      onClick={this.sortHandler(SortBy.NAME)} />
           <SortHeader name="Type"
                       order={sortBy === SortBy.CLASSIFICATION ? sortOrder : null}
                       className="room-type"
-                      onClick={this._sortHandler(SortBy.CLASSIFICATION)} />
+                      onClick={this.sortHandler(SortBy.CLASSIFICATION)} />
           <SortHeader name="Capacity"
                       order={sortBy === SortBy.CAPACITY ? sortOrder : null}
                       className="room-capacity"
-                      onClick={this._sortHandler(SortBy.CAPACITY)} />
+                      onClick={this.sortHandler(SortBy.CAPACITY)} />
         </div>
-        <div className={classNames("rooms", { loading: loading })}>
-          {roomComponents}
+        <div className={classNames("rooms", { loading: this.props.loading })}>
+          {this.roomComponents()}
         </div>
       </div>
     )
   }
 
-  _sortHandler(property) {
+  sortHandler(property) {
     return () => {
-      this._sortBy(property);
+      this.sortBy(property);
     }
   }
 
-  _sortBy(property) {
+  sortBy(property) {
     const sortOrder = (this.state.sortBy === property) ?
                       toggle(this.state.sortOrder, Object.values(SortTypes)) :
                       SortTypes.ASC;
@@ -103,12 +115,12 @@ class Rooms extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { active, date, loading, bookingsByRoom } = state;
+  const { active, date, loading, roomDiaries } = state;
   return {
     active,
     date,
     loading,
-    bookingsByRoom
+    roomDiaries
   };
 }
 

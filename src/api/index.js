@@ -52,14 +52,14 @@ export function getBookingsForDay(date, retries=0) {
   // if (cache[dateKey] && !cache[dateKey].invalidated && !expired(dateKey)) {
   //   return cache[dateKey].pending ?
   //          cache[dateKey].promise :
-  //          new Promise((resolve) => resolve(cache[dateKey].bookingsByRoom));
+  //          new Promise((resolve) => resolve(cache[dateKey].roomDiaries));
   // } else {
   //
   //   const requested = moment();
   //
   //   const promise = requestBookingsForDay(date)
   //     .then((bookings) => structureBookings(date, bookings))
-  //     .then((bookingsByRoom) => {
+  //     .then((roomDiaries) => {
   //       // do not update cache if a newer request has updated it
   //       // this can happen when a request is invalidated while it's pending
   //       if (requested.diff(cache[dateKey].requested) >= 0) {
@@ -67,12 +67,12 @@ export function getBookingsForDay(date, retries=0) {
   //           pending: false,
   //           invalidated: false,
   //           received: moment(),
-  //           bookingsByRoom,
+  //           roomDiaries,
   //           requested,
   //           promise
   //         }
   //       }
-  //       return bookingsByRoom;
+  //       return roomDiaries;
   //     })
   //     .catch((error) => {
   //       cache[dateKey].pending = false;

@@ -5,7 +5,16 @@ import PropTypes from 'prop-types';
 import Availability from './Availability';
 import getClassificationName from '../utils/classification-name';
 
-const Room = ({ date, room, bookings }) => {
+const Room = ({
+  date,
+  room,
+  loading,
+  closedAllDay,
+  opens,
+  closes,
+  bookings
+}) => {
+
   const {
     roomname,
     capacity,
@@ -25,7 +34,12 @@ const Room = ({ date, room, bookings }) => {
         <div className="room-capacity">{capacity}</div>
       </div>
 
-      <Availability />
+      <Availability date={date}
+                    loading={loading}
+                    closedAllDay={closedAllDay}
+                    opens={opens}
+                    closes={closes}
+                    bookings={bookings} />
 
     </div>
   )

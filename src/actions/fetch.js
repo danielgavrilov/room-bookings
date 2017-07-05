@@ -13,7 +13,7 @@ export const fetchBookingsRequest = makeAction(
 export const fetchBookingsSuccess = makeAction(
   FETCH_BOOKINGS_SUCCESS,
   "date",
-  "bookingsByRoom"
+  "roomDiaries"
 );
 
 export const fetchBookingsFailure = makeAction(
@@ -26,7 +26,7 @@ export function fetchBookings(date) {
   return function(dispatch) {
     dispatch(fetchBookingsRequest(date));
     return getBookingsForDay(date)
-      .then((bookingsByRoom) => dispatch(fetchBookingsSuccess(date, bookingsByRoom)))
+      .then((roomDiaries) => dispatch(fetchBookingsSuccess(date, roomDiaries)))
       .catch((error) => dispatch(fetchBookingsFailure(date, error)));
   }
 }

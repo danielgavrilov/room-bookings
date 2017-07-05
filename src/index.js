@@ -20,7 +20,7 @@ const initialState = {
   hours: 1.0,
   between: [],
   capacity: [],
-  bookingsByRoom: {}
+  roomDiaries: {}
 };
 
 const store = createStore(
