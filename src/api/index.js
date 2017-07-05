@@ -1,9 +1,9 @@
 import R from 'ramda';
 import moment from '../moment';
 
-import now from '../utils/now';
 import { getBookings } from './endpoints';
-import { getDateKey, getUniqueRoomKey } from '../utils/keys';
+import { getDateKey } from '../utils/keys';
+import structureBookings from './structure-bookings';
 
 import todayBookings from '../data/bookings.json';
 
@@ -24,7 +24,7 @@ function expired(dateKey) {
   } else if (cache[dateKey].pending) {
     return false;
   }
-  const today = now();
+  const today = moment();
   const received = cache[dateKey].received; // time received
   const minutes = getDateKey(today) === dateKey ?
                   CACHE_TODAY_MINUTES :
@@ -38,24 +38,12 @@ function requestBookingsForDay(date) {
   return getBookings({ start, end });
 }
 
-function types(booking) {
-  booking.start_time = moment(booking.start_time).tz("Europe/London");
-  booking.end_time = moment(booking.end_time).tz("Europe/London");
-  return booking;
-}
-
-function structureBookings(bookings) {
-  // TODO remove duplication of roomname, roomid?
-  return R.compose(
-    R.groupBy(getUniqueRoomKey),
-    R.map(types)
-  )(bookings);
-}
-
 export function getBookingsForDay(date, retries=0) {
 
   // temporarily resolve from local bookings.json
-  return new Promise((resolve) => resolve(todayBookings));
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(todayBookings), 1000);
+  });
 
   // TODO uncomment
 
@@ -67,7 +55,7 @@ export function getBookingsForDay(date, retries=0) {
   //          new Promise((resolve) => resolve(cache[dateKey].bookingsByRoom));
   // } else {
   //
-  //   const requested = now();
+  //   const requested = moment();
   //
   //   const promise = requestBookingsForDay(date)
   //     .then(structureBookings)
@@ -78,7 +66,7 @@ export function getBookingsForDay(date, retries=0) {
   //         cache[dateKey] = {
   //           pending: false,
   //           invalidated: false,
-  //           received: now(),
+  //           received: moment(),
   //           bookingsByRoom,
   //           requested,
   //           promise
