@@ -20,8 +20,7 @@
   box-shadow: 0 4px 8px rgba(0,0,0,.1);
 }
 
-.room-info,
-.room-availability {
+.room-info {
   display: flex;
   flex-direction: row;
 }
