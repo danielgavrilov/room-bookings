@@ -35,7 +35,7 @@ export function getBookings({ roomid, siteid, start, end }) {
     end_datetime: end.format()
   })
   .then((dataArray) => {
-    return R.flatten(dataArray.map((data) => data.bookings));
+    return R.unnest(dataArray.map((data) => data.bookings));
   })
   .catch(function(error) {
     console.error(error);
