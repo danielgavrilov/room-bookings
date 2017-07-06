@@ -31,7 +31,6 @@ class Room extends Component {
   }
 
   onVisible(visible) {
-    const roomname = this.props.room.roomname;
     this.setState({ visible });
   }
 

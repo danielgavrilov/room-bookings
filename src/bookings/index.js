@@ -2,8 +2,6 @@ import moment from '../moment';
 
 import { getBookings } from './api';
 import { getDateKey } from '../utils/keys';
-
-import todayBookings from '../data/bookings.json';
 import diaries from './diaries';
 
 const MAX_RETRIES = 2;
