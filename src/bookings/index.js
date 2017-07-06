@@ -2,9 +2,9 @@ import moment from '../moment';
 
 import { getBookings } from './api';
 import { getDateKey } from '../utils/keys';
-import structure from './structure';
 
 import todayBookings from '../data/bookings.json';
+import diaries from './diaries';
 
 const MAX_RETRIES = 2;
 
@@ -50,7 +50,7 @@ export function getBookingsForDay(date, retries=0) {
     const requested = moment();
 
     const promise = requestBookingsForDay(date)
-      .then((bookings) => structure(date, bookings))
+      .then((bookings) => diaries(date, bookings))
       .then((roomDiaries) => {
         // do not update cache if a newer request has updated it
         // this can happen when a request is invalidated while it's pending

@@ -58,24 +58,24 @@ function availability({ closedAllDay, opens, closes, bookings }) {
 
   if (closedAllDay) return [];
 
-  let begin = opens,
+  let cursor = opens,
       intervals = [];
 
   bookings = R.sortBy(R.prop("start_time"), bookings);
 
   for (const { start_time, end_time } of bookings) {
-    if (begin.isBefore(start_time)) {
+    if (cursor.isBefore(start_time)) {
       intervals.push({
-        start_time: begin,
+        start_time: cursor,
         end_time: start_time
       });
-      begin = end_time;
     }
+    cursor = end_time;
   }
 
-  if (begin.isBefore(closes)) {
+  if (cursor.isBefore(closes)) {
     intervals.push({
-      start_time: begin,
+      start_time: cursor,
       end_time: closes
     });
   }
@@ -130,7 +130,7 @@ function types(booking) {
   return booking;
 }
 
-export default function structureBookings(date, bookings) {
+export default function diaries(date, bookings) {
   // TODO remove duplication of roomname, roomid?
   return R.compose(
     R.mapObjIndexed((bookings) => openingAndClosing(date, bookings)),
