@@ -10,14 +10,9 @@ import getClassificationName from '../utils/classification-name';
 class Room extends Component {
 
   static propTypes = {
-    diaryDate: PropTypes.instanceOf(moment),
     room: PropTypes.object,
-    loading: PropTypes.bool,
-    closedAllDay: PropTypes.bool,
-    opens: PropTypes.instanceOf(moment),
-    closes: PropTypes.instanceOf(moment),
-    bookings: PropTypes.arrayOf(PropTypes.object),
-    available: PropTypes.arrayOf(PropTypes.object)
+    active: PropTypes.bool,
+    diary: PropTypes.object
   }
 
   constructor(props) {
@@ -37,16 +32,15 @@ class Room extends Component {
 
   render() {
 
+    const { room, diary } = this.props;
+
     const {
-      diaryDate,
-      room,
-      loading,
       closedAllDay,
       opens,
       closes,
       bookings,
       available
-    } = this.props;
+    } = diary || {}; // prevent error if diary === undefined
 
     const {
       roomname,
@@ -74,9 +68,7 @@ class Room extends Component {
             <div className="room-capacity">{capacity}</div>
           </div>
 
-          <Availability diaryDate={diaryDate}
-                        loading={loading}
-                        closedAllDay={closedAllDay}
+          <Availability closedAllDay={closedAllDay}
                         opens={opens}
                         closes={closes}
                         bookings={bookings}

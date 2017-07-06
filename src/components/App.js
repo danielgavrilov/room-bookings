@@ -41,9 +41,9 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = ({ error }) => {
   return {
-    error: state.error
+    error
   }
 }
 

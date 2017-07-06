@@ -1,6 +1,7 @@
 import R from 'ramda';
 import moment from '../moment';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -33,8 +34,6 @@ function perc(fraction) {
 class Availability extends Component {
 
   static propTypes = {
-    diaryDate: PropTypes.instanceOf(moment),
-    loading: PropTypes.bool,
     closedAllDay: PropTypes.bool,
     opens: PropTypes.instanceOf(moment),
     closes: PropTypes.instanceOf(moment),
@@ -107,6 +106,14 @@ class Availability extends Component {
     )
   }
 
+  focusOnBetween() {
+    const { active, between } = this.props;
+    if (active) {
+      // TODO
+    }
+    return null;
+  }
+
   render() {
     return (
       <div className="room-availability">
@@ -114,6 +121,7 @@ class Availability extends Component {
           {this.availableIntervals()}
           {this.bookings()}
           {this.ticks()}
+          {this.focusOnBetween()}
         </div>
       </div>
     )
@@ -121,4 +129,13 @@ class Availability extends Component {
 
 }
 
-export default Availability;
+const mapStateToProps = ({ active, between }) => {
+  return {
+    active,
+    between
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(Availability);

@@ -137,8 +137,7 @@ const Search = ({
   </div>
 )
 
-const mapStateToProps = (state, ownProps) => {
-  const { active, date, between } = state;
+const mapStateToProps = ({ active, date, between }) => {
   return {
     active,
     date,
@@ -146,7 +145,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     selectDate: (date) => {
       date = moment(date).startOf("day");

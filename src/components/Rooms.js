@@ -42,6 +42,24 @@ class Rooms extends Component {
     }, rooms);
   }
 
+  sortHandler(property) {
+    return () => {
+      // fire 'refreshViewport' to force VisibilitySensor update
+      window.dispatchEvent(new CustomEvent("refreshViewport"));
+      this.sortBy(property);
+    }
+  }
+
+  sortBy(property) {
+    const sortOrder = (this.state.sortBy === property) ?
+                      toggle(this.state.sortOrder, R.values(SortOrder)) :
+                      SortOrder.ASC;
+    this.setState({
+      sortBy: property,
+      sortOrder
+    });
+  }
+
   render() {
 
     const { active, diaryDate, loading, roomDiaries, between } = this.props;
@@ -73,38 +91,16 @@ class Rooms extends Component {
 
         <RoomList className={classNames("rooms", { loading: this.props.loading })}
                   rooms={results}
-                  diaryDate={diaryDate}
                   roomDiaries={roomDiaries}
                   sortBy={sortBy}
-                  sortOrder={sortOrder}
-                  between={between}
-                  loading={loading} />
+                  sortOrder={sortOrder} />
       </div>
     )
   }
 
-  sortHandler(property) {
-    return () => {
-      // fire 'refreshViewport' to force VisibilitySensor update
-      window.dispatchEvent(new CustomEvent("refreshViewport"));
-      this.sortBy(property);
-    }
-  }
-
-  sortBy(property) {
-    const sortOrder = (this.state.sortBy === property) ?
-                      toggle(this.state.sortOrder, R.values(SortOrder)) :
-                      SortOrder.ASC;
-    this.setState({
-      sortBy: property,
-      sortOrder
-    });
-  }
-
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { active, diaryDate, loading, roomDiaries, hours, between } = state;
+const mapStateToProps = ({ active, diaryDate, loading, roomDiaries, hours, between }) => {
   return {
     active,
     diaryDate,

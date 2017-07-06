@@ -12,16 +12,10 @@ class RoomList extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    diaryDate: PropTypes.instanceOf(moment).isRequired,
     rooms: PropTypes.arrayOf(PropTypes.object).isRequired,
     roomDiaries: PropTypes.object.isRequired,
-    sortOrder: PropTypes.oneOf(R.values(SortOrder)).isRequired,
     sortBy: PropTypes.oneOf(R.values(SortBy)).isRequired,
-    loading: PropTypes.bool
-  }
-
-  static defaultProps = {
-    loading: false
+    sortOrder: PropTypes.oneOf(R.values(SortOrder)).isRequired
   }
 
   sortedRooms() {
@@ -42,17 +36,14 @@ class RoomList extends Component {
   }
 
   roomComponents() {
-    const { diaryDate, roomDiaries } = this.props;
+    const { diaryDate, roomDiaries, between } = this.props;
     return this.sortedRooms().map((room) => {
       const key = getUniqueRoomKey(room);
-      const props = roomDiaries[key] != null ?
-                    roomDiaries[key] :
-                    { loading: true };
+      const diary = roomDiaries[key];
       return (
         <Room key={key}
-              diaryDate={diaryDate}
               room={room}
-              {...props} />
+              diary={diary} />
       );
     });
   }
