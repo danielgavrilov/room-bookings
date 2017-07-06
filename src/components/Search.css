@@ -15,7 +15,11 @@
 
 @media (max-width: 35em) {
   .search-form {
-    flex-direction: column;
+    display: block;
+  }
+  .search-form select {
+    display: block;
+    width: 100%;
   }
 }
 
