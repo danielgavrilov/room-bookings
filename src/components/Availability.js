@@ -100,6 +100,9 @@ class Availability extends Component {
             {formatHour(h)}
           </div>
         ))}
+        <div className="closed-note">
+          <span>Closed all day</span>
+        </div>
       </div>
     )
   }

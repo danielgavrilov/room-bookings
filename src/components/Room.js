@@ -1,6 +1,7 @@
 import moment from '../moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import VisibilitySensor from './VisibilitySensor';
 
 import Availability from './Availability';
@@ -65,7 +66,7 @@ class Room extends Component {
                         intervalCheck={true}
                         intervalDelay={3000}
                         offset={{ top: -1000, bottom: -1000 }}>
-        <div className="room">
+        <div className={classNames("room", { "closed": closedAllDay })}>
 
           <div className="room-info">
             <h3 className="room-name">{roomname}</h3>

@@ -70,7 +70,6 @@ div.sorting {
   height: 6px;
   width: 100%;
   background-color: #f1f1f1;
-  margin: 0 -1px;
   position: relative;
 }
 
@@ -138,6 +137,36 @@ div.sorting {
 .half-hour-tick {
   width: 1px;
   margin-left: -0.5px;
+}
+
+.closed-note {
+  display: none;
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  margin-bottom: -1em;
+  line-height: 2em;
+  z-index: 100;
+}
+
+.closed-note span {
+  color: #d8d8d8;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  background-color: white;
+  padding: 0 .4em;
+}
+
+.closed .closed-note {
+  display: block;
+}
+
+.closed .hour-label {
+  display: none;
 }
 
 /*
