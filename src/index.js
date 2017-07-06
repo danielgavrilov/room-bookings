@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import moment from './moment';
+import FastClick from 'fastclick';
 
 import App from './components/App';
 import rootReducer from './reducers';
@@ -41,5 +42,7 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+FastClick.attach(document.body);
 
 store.dispatch(fetchBookings(today));

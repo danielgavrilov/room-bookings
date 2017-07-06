@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "classnames": "^2.2.5",
+    "fastclick": "^1.0.6",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "normalize.css": "^7.0.0",
