@@ -30,8 +30,13 @@
   outline: none;
 }
 
-.DayPicker-Day--outside:hover {
-  background-color: transparent !important;
+.DayPicker-Day--outside {
+  cursor: pointer;
+}
+
+.DayPicker-Day--outside:hover,
+.DayPicker-Day--outside:focus {
+  background-color: #fafafa;
 }
 
 .DayPicker-Month {
