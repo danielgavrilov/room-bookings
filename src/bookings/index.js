@@ -11,6 +11,8 @@ const CACHE_DEFAULT_MINUTES = 10; // cache in minutes for any other bookings
 // the reason for this: bookings made on the day can be automatic and can go
 // through immediately
 
+const NO_DATA_ERROR = "There is no data for the given date.";
+
 const cache = {};
 
 function expired(dateKey) {
@@ -29,13 +31,20 @@ function expired(dateKey) {
   return today.diff(received, "minutes") > minutes;
 }
 
-function requestBookingsForDay(date) {
+function requestBookingsForDay(date, retries=0) {
   const start = date.clone().startOf("day");
   const end = date.clone().endOf("day");
-  return getBookings({ start, end });
+  return getBookings({ start, end })
+    .catch((error) => {
+      if (retries < MAX_RETRIES) {
+        return requestBookingsForDay(date, retries + 1);
+      } else {
+        throw error;
+      }
+    });
 }
 
-export function getBookingsForDay(date, retries=0) {
+export function getBookingsForDay(date) {
 
   const dateKey = getDateKey(date);
 
@@ -50,7 +59,13 @@ export function getBookingsForDay(date, retries=0) {
     const promise = requestBookingsForDay(date)
       // prevent `diaries` from autopopulating missing rooms if there are no
       // bookings for *any* room
-      .then((bookings) => bookings && bookings.length ? diaries(date, bookings) : {})
+      .then((bookings) => {
+        if (bookings.length > 0) {
+          return diaries(date, bookings);
+        } else {
+          throw new Error(NO_DATA_ERROR);
+        }
+      })
       .then((roomDiaries) => {
         // do not update cache if a newer request has updated it
         // this can happen when a request is invalidated while it's pending
@@ -69,11 +84,7 @@ export function getBookingsForDay(date, retries=0) {
       .catch((error) => {
         cache[dateKey].pending = false;
         cache[dateKey].invalidated = true;
-        if (retries < MAX_RETRIES) {
-          return getBookingsForDay(date, retries + 1);
-        } else {
-          throw error;
-        }
+        throw error;
       });
 
     cache[dateKey] = {

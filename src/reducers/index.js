@@ -11,8 +11,6 @@ import {
   SEARCH_CAPACITY,
 } from '../actions';
 
-const NO_DATA_ERROR = new Error("There is no data for the selected date.");
-
 export default function(state, action) {
   switch (action.type) {
 
@@ -32,10 +30,7 @@ export default function(state, action) {
           ...state,
           loading: false,
           diaryDate: action.date,
-          roomDiaries: action.roomDiaries,
-          // in case there are no bookings from API, show error
-          error: state.error ||
-                 equals(action.roomDiaries, {}) ? NO_DATA_ERROR : null
+          roomDiaries: action.roomDiaries
         }
       }
       return state;
@@ -45,6 +40,7 @@ export default function(state, action) {
         return {
           ...state,
           loading: false,
+          roomDiaries: {},
           error: action.error
         }
       }
