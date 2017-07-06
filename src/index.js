@@ -15,7 +15,7 @@ const today = moment().startOf("day"); // today at 00:00
 
 const initialState = {
   active: false,
-  loading: false,
+  loading: true,
   error: null,
   date: today,
   diaryDate: today, // holds the date of the current roomDiaries
