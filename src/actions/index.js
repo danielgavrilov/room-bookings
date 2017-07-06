@@ -16,12 +16,14 @@ import {
 
   SEARCH_DATE,
   SEARCH_HOURS,
-  SEARCH_BETWEEN,
+  SEARCH_START,
+  SEARCH_END,
   SEARCH_CAPACITY,
 
   searchDate,
   searchHours,
-  searchBetween,
+  searchStart,
+  searchEnd,
   searchCapacity
 
 } from './search';
@@ -34,7 +36,8 @@ export {
   FETCH_BOOKINGS_FAILURE,
   SEARCH_DATE,
   SEARCH_HOURS,
-  SEARCH_BETWEEN,
+  SEARCH_START,
+  SEARCH_END,
   SEARCH_CAPACITY,
 
   fetchBookingsRequest,
@@ -42,7 +45,8 @@ export {
   fetchBookingsFailure,
   searchDate,
   searchHours,
-  searchBetween,
+  searchStart,
+  searchEnd,
   searchCapacity,
 
   fetchBookings
