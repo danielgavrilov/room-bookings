@@ -18,10 +18,13 @@ const initialState = {
   loading: false,
   error: null,
   date: today,
-  hours: 1.0,
-  between: [],
-  capacity: [],
   diaryDate: today, // holds the date of the current roomDiaries
+  hours: 0,
+  between: [
+    "08:00",
+    "14:00"
+  ],
+  capacity: [],
   roomDiaries: {}
 };
 
