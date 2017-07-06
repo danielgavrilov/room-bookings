@@ -26,7 +26,7 @@ const Search = ({
 }) => (
   <div className="search-form">
     <div className="textual">
-      <form id="search" className="search-form">
+      <form id="search">
         I need a room for
         <select name="hours" id="hours" defaultValue="0" onChange={selectHours}>
           <option value="0">...</option>
