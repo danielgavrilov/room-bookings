@@ -1,9 +1,0 @@
-let temp = R.compose(
-  R.mapObjIndexed(R.map((booking) => [booking.start_time, booking.end_time].map((x) => x.format("HH:mm")).join("-"))),
-  R.mapObjIndexed(R.filter(closure)),
-  R.groupBy(getUniqueRoomKey),
-  R.sortBy((booking) => booking.start_time.toDate()),
-  R.filter(closure),
-  R.map(types)
-)(bookings);
-debugger;
