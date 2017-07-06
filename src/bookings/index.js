@@ -48,7 +48,9 @@ export function getBookingsForDay(date, retries=0) {
     const requested = moment();
 
     const promise = requestBookingsForDay(date)
-      .then((bookings) => diaries(date, bookings))
+      // prevent `diaries` from autopopulating missing rooms if there are no
+      // bookings for *any* room
+      .then((bookings) => bookings && bookings.length ? diaries(date, bookings) : {})
       .then((roomDiaries) => {
         // do not update cache if a newer request has updated it
         // this can happen when a request is invalidated while it's pending
