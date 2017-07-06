@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import VisibilitySensor from './VisibilitySensor';
 
-import Availability from './Availability';
+import Availability from '../containers/Availability';
 import getClassificationName from '../utils/classification-name';
 
 class Room extends Component {

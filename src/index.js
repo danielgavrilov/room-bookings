@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import moment from './moment';
 import FastClick from 'fastclick';
 
-import App from './components/App';
+import App from './containers/App';
 import rootReducer from './reducers';
 import { fetchBookings } from './actions';
 

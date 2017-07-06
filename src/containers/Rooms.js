@@ -9,8 +9,8 @@ import { getUniqueRoomKey } from '../utils/keys';
 import { relativeTime, intersections } from '../utils/dates';
 import SortOrder from '../utils/sort-order';
 import SortBy from '../utils/sort-by.js';
-import SortHeader from './SortHeader';
-import RoomList from './RoomList';
+import SortHeader from '../components/SortHeader';
+import RoomList from '../components/RoomList';
 
 import './Rooms.css';
 
