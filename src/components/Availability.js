@@ -22,7 +22,7 @@ function perc(fraction) {
 class Availability extends Component {
 
   static propTypes = {
-    date: PropTypes.instanceOf(moment),
+    diaryDate: PropTypes.instanceOf(moment),
     loading: PropTypes.bool,
     closedAllDay: PropTypes.bool,
     opens: PropTypes.instanceOf(moment),

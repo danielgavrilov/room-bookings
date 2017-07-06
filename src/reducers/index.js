@@ -26,6 +26,7 @@ export default function(state, action) {
         return {
           ...state,
           loading: false,
+          diaryDate: action.date,
           roomDiaries: action.roomDiaries
         }
       }

@@ -28,7 +28,7 @@ class Rooms extends Component {
 
   render() {
 
-    const { loading, roomDiaries, between } = this.props;
+    const { active, diaryDate, loading, roomDiaries, between } = this.props;
     const { sortBy, sortOrder } = this.state;
 
     return (
@@ -50,6 +50,7 @@ class Rooms extends Component {
 
         <RoomList className={classNames("rooms", { loading: this.props.loading })}
                   rooms={rooms}
+                  diaryDate={diaryDate}
                   roomDiaries={roomDiaries}
                   sortBy={sortBy}
                   sortOrder={sortOrder}
@@ -80,10 +81,10 @@ class Rooms extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { active, date, loading, roomDiaries, between } = state;
+  const { active, diaryDate, loading, roomDiaries, hours, between } = state;
   return {
     active,
-    date,
+    diaryDate,
     loading,
     roomDiaries,
     between

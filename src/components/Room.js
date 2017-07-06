@@ -9,7 +9,7 @@ import getClassificationName from '../utils/classification-name';
 class Room extends Component {
 
   static propTypes = {
-    date: PropTypes.instanceOf(moment),
+    diaryDate: PropTypes.instanceOf(moment),
     room: PropTypes.object,
     loading: PropTypes.bool,
     closedAllDay: PropTypes.bool,
@@ -38,7 +38,7 @@ class Room extends Component {
   render() {
 
     const {
-      date,
+      diaryDate,
       room,
       loading,
       closedAllDay,
@@ -74,7 +74,7 @@ class Room extends Component {
             <div className="room-capacity">{capacity}</div>
           </div>
 
-          <Availability date={date}
+          <Availability diaryDate={diaryDate}
                         loading={loading}
                         closedAllDay={closedAllDay}
                         opens={opens}

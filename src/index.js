@@ -21,6 +21,7 @@ const initialState = {
   hours: 1.0,
   between: [],
   capacity: [],
+  diaryDate: today, // holds the date of the current roomDiaries
   roomDiaries: {}
 };
 
