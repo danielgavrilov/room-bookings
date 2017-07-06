@@ -2,6 +2,7 @@ import R from 'ramda';
 import moment from '../moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { clamp } from '../utils/general';
 
@@ -80,13 +81,24 @@ class Availability extends Component {
     return (
       <div className="ticks">
         {R.range(START+1, END).map((h) => (
-          <div key={"hour-tick-"+h} className="hour-tick" style={{ left: perc(scaleHours(h)) }}></div>
+          <div key={"hour-tick-"+h}
+               className="hour-tick"
+               style={{ left: perc(scaleHours(h)) }} />
         ))}
         {R.range(START, END).map((h) => h + 0.5).map((h) => (
-          <div key={"half-hour-tick-"+h} className="half-hour-tick" style={{ left: perc(scaleHours(h)) }}></div>
+          <div key={"half-hour-tick-"+h}
+               className="half-hour-tick"
+               style={{ left: perc(scaleHours(h)) }} />
         ))}
         {R.range(START+1, END).map((h) => (
-          <div key={"hour-label-"+h} className="hour-label" style={{ left: perc(scaleHours(h)) }}>{formatHour(h)}</div>
+          <div key={"hour-label-"+h}
+               className={classNames("hour-label", {
+                 "hour-label-odd": !!(h % 2),
+                 "hour-label-even": !(h % 2)
+               })}
+               style={{ left: perc(scaleHours(h)) }}>
+            {formatHour(h)}
+          </div>
         ))}
       </div>
     )

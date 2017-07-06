@@ -130,6 +130,9 @@ div.sorting {
     width: 2px;
     margin-left: -1px;
   }
+  .hour-label-odd {
+    display: none;
+  }
 }
 
 .half-hour-tick {
