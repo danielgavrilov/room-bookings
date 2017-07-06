@@ -59,7 +59,7 @@ export default function(state, action) {
     case SEARCH_HOURS:
       return {
         ...state,
-        active: action.hours != 0,
+        active: action.hours !== 0,
         hours: action.hours
       }
 
