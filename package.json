@@ -8,6 +8,7 @@
     "classnames": "^2.2.5",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
+    "normalize.css": "^7.0.0",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
     "react-day-picker": "^6.0.5",

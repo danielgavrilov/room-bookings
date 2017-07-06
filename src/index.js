@@ -9,6 +9,7 @@ import App from './components/App';
 import rootReducer from './reducers';
 import { fetchBookings } from './actions';
 
+import 'normalize.css'
 import './index.css';
 
 const today = moment().startOf("day"); // today at 00:00
