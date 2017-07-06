@@ -27,9 +27,10 @@ header h1 {
 footer {
   text-align: center;
   margin: 3em auto 2em;
-  max-width: 40em;
+  max-width: 42em;
   opacity: .5;
   transition: opacity 1s ease;
+  padding: 1em;
 }
 
 footer:hover {
