@@ -125,6 +125,13 @@ div.sorting {
   margin-left: -1.5px;
 }
 
+@media (max-width: 35em) {
+  .hour-tick {
+    width: 2px;
+    margin-left: -1px;
+  }
+}
+
 .half-hour-tick {
   width: 1px;
   margin-left: -0.5px;
