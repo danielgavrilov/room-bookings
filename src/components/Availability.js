@@ -19,6 +19,12 @@ function scaleHours(hours) {
   return unitClamp((hours - START) / (END - START));
 }
 
+function formatHour(hour) {
+  const suffix = hour >= 12 ? "pm" : "am";
+  const prefix = hour >= 13 ? hour - 12 : hour;
+  return prefix + suffix;
+}
+
 function perc(fraction) {
   return (fraction * 100) + "%";
 }
@@ -74,10 +80,13 @@ class Availability extends Component {
     return (
       <div className="ticks">
         {R.range(START+1, END).map((h) => (
-          <div key={"hour-"+h} className="hour-tick" style={{ left: perc(scaleHours(h)) }}></div>
+          <div key={"hour-tick-"+h} className="hour-tick" style={{ left: perc(scaleHours(h)) }}></div>
         ))}
         {R.range(START, END).map((h) => h + 0.5).map((h) => (
-          <div key={"half-hour-"+h} className="half-hour-tick" style={{ left: perc(scaleHours(h)) }}></div>
+          <div key={"half-hour-tick-"+h} className="half-hour-tick" style={{ left: perc(scaleHours(h)) }}></div>
+        ))}
+        {R.range(START+1, END).map((h) => (
+          <div key={"hour-label-"+h} className="hour-label" style={{ left: perc(scaleHours(h)) }}>{formatHour(h)}</div>
         ))}
       </div>
     )

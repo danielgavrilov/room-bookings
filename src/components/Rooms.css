@@ -83,6 +83,29 @@ div.sorting {
   bottom: 0;
 }
 
+.hour-label {
+  font-size: 0.9em;
+  color: #ccc;
+  text-align: center;
+  text-shadow: 0 1px 3px white;
+  width: 2em;
+  margin-left: -1em;
+  position: absolute;
+  bottom: .75em;
+  z-index: 10;
+  transform: translate(0, .5em);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 200ms ease 200ms,
+              opacity 200ms ease 200ms;
+}
+
+.room:hover .hour-label,
+.room:focus .hour-label {
+  transform: translate(0,0);
+  opacity: 1;
+}
+
 .booking {
   background-color: #bebebe;
 }
