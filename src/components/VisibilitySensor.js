@@ -1,3 +1,5 @@
+/* eslint default-case: 0 */
+
 /*
 
 Adapted from: https://github.com/joshwnj/react-visibility-sensor/
@@ -60,6 +62,7 @@ if (typeof window !== 'undefined') {
     containmentPropType = PropTypes.instanceOf(window.Element);
 }
 
+/*
 function throttle(callback, limit) {
     var wait = false;
     return function() {
@@ -86,6 +89,7 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
+*/
 
 class VisibilitySensor extends Component {
 
