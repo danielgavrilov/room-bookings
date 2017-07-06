@@ -3,8 +3,12 @@ import moment from '../moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { clamp } from '../utils/general';
+
 const START = 8;
 const END = 24;
+
+const unitClamp = clamp(0, 1);
 
 function scaleTime(time) {
   const hours = time.hours() + time.minutes() / 60 + time.seconds() / 3600;
@@ -12,7 +16,7 @@ function scaleTime(time) {
 }
 
 function scaleHours(hours) {
-  return (hours - START) / (END - START);
+  return unitClamp((hours - START) / (END - START));
 }
 
 function perc(fraction) {
