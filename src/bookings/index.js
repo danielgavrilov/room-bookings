@@ -1,17 +1,16 @@
 import moment from '../moment';
 
+
 import { getBookings } from './api';
 import { getDateKey } from '../utils/keys';
 import diaries from './diaries';
 
-const MAX_RETRIES = 2;
-
-const CACHE_TODAY_MINUTES = 2;    // cache in minutes for today's bookings
-const CACHE_DEFAULT_MINUTES = 10; // cache in minutes for any other bookings
-// the reason for this: bookings made on the day can be automatic and can go
-// through immediately
-
-const NO_DATA_ERROR = "There is no data for the given date.";
+import {
+  MAX_RETRIES,
+  CACHE_DEFAULT_MINUTES,
+  CACHE_TODAY_MINUTES,
+  NO_DATA_ERROR_MESSAGE
+} from '../config.js';
 
 const cache = {};
 
@@ -63,7 +62,7 @@ export function getBookingsForDay(date) {
         if (bookings.length > 0) {
           return diaries(date, bookings);
         } else {
-          throw new Error(NO_DATA_ERROR);
+          throw new Error(NO_DATA_ERROR_MESSAGE);
         }
       })
       .then((roomDiaries) => {

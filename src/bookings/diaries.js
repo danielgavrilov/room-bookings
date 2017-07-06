@@ -5,11 +5,12 @@ import rooms from '../data/rooms.json';
 import { getUniqueRoomKey } from '../utils/keys';
 import { relativeTime } from '../utils/dates';
 
-const ROOMS_OPEN = "08:00";
-const ROOMS_CLOSE = "23:30";
-
-const LATEST_OPEN = "10:00";
-const EARLIEST_CLOSE = "21:00";
+import {
+  DEFAULT_ROOM_OPENING,
+  DEFAULT_ROOM_CLOSING,
+  LATEST_OPENING,
+  EARLIEST_CLOSING
+} from '../config.js';
 
 const reClosed = /(UCL|Room|Rm\.)\sClosed/i;
 
@@ -20,10 +21,10 @@ function closure(booking) {
 
 function openingTime(date, bookings) {
   const t = relativeTime(date);
-  let opens = t(ROOMS_OPEN);
+  let opens = t(DEFAULT_ROOM_OPENING);
   bookings = R.sortBy(R.prop("start_time"), bookings);
   for (const booking of bookings) {
-    if (closure(booking) && (booking.start_time.isSameOrBefore(t(LATEST_OPEN)) ||
+    if (closure(booking) && (booking.start_time.isSameOrBefore(t(LATEST_OPENING)) ||
                              booking.start_time.isSameOrBefore(opens))) {
       opens = booking.end_time;
     } else {
@@ -38,10 +39,10 @@ function openingTime(date, bookings) {
 
 function closingTime(date, bookings) {
   const t = relativeTime(date);
-  let closes = t(ROOMS_CLOSE);
+  let closes = t(DEFAULT_ROOM_CLOSING);
   bookings = R.sortBy(R.prop("end_time"), bookings).reverse();
   for (const booking of bookings) {
-    if (closure(booking) && (booking.end_time.isSameOrAfter(t(EARLIEST_CLOSE)) ||
+    if (closure(booking) && (booking.end_time.isSameOrAfter(t(EARLIEST_CLOSING)) ||
                              booking.end_time.isSameOrAfter(closes))) {
       closes = booking.start_time;
     } else {

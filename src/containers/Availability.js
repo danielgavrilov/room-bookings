@@ -7,8 +7,10 @@ import classNames from 'classnames';
 
 import { clamp } from '../utils/general';
 
-const START = 8;
-const END = 24;
+import {
+  START_HOUR,
+  END_HOUR
+} from '../config.js';
 
 const unitClamp = clamp(0, 1);
 
@@ -18,7 +20,7 @@ function scaleTime(time) {
 }
 
 function scaleHours(hours) {
-  return unitClamp((hours - START) / (END - START));
+  return unitClamp((hours - START_HOUR) / (END_HOUR - START_HOUR));
 }
 
 function formatHour(hour) {
@@ -79,17 +81,17 @@ class Availability extends Component {
   ticks() {
     return (
       <div className="ticks">
-        {R.range(START+1, END).map((h) => (
+        {R.range(START_HOUR+1, END_HOUR).map((h) => (
           <div key={"hour-tick-"+h}
                className="hour-tick"
                style={{ left: perc(scaleHours(h)) }} />
         ))}
-        {R.range(START, END).map((h) => h + 0.5).map((h) => (
+        {R.range(START_HOUR, END_HOUR).map((h) => h + 0.5).map((h) => (
           <div key={"half-hour-tick-"+h}
                className="half-hour-tick"
                style={{ left: perc(scaleHours(h)) }} />
         ))}
-        {R.range(START+1, END).map((h) => (
+        {R.range(START_HOUR+1, END_HOUR).map((h) => (
           <div key={"hour-label-"+h}
                className={classNames("hour-label", {
                  "hour-label-odd": !!(h % 2),
