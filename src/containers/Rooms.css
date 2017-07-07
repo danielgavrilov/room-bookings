@@ -75,6 +75,7 @@ div.sorting {
 
 .booking,
 .available,
+.shade,
 .hour-tick,
 .half-hour-tick {
   position: absolute;
@@ -111,6 +112,21 @@ div.sorting {
 
 .available {
   background-color: #2ab12a;
+}
+
+.shade {
+  background-color: rgba(255,255,255,.8);
+  top: -0.2em;
+  bottom: -0.2em;
+  z-index: 100;
+}
+
+.shade-before {
+  border-right: 2px solid #333;
+}
+
+.shade-after {
+  border-left: 2px solid #333;
 }
 
 .hour-tick,

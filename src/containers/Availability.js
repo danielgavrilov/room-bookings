@@ -14,13 +14,22 @@ import {
 
 const unitClamp = clamp(0, 1);
 
+function timeToHours(time) {
+  return time.hours() + time.minutes() / 60 + time.seconds() / 3600;
+}
+
 function scaleTime(time) {
-  const hours = time.hours() + time.minutes() / 60 + time.seconds() / 3600;
+  const hours = timeToHours(time);
   return scaleHours(hours);
 }
 
 function scaleHours(hours) {
   return unitClamp((hours - START_HOUR) / (END_HOUR - START_HOUR));
+}
+
+function getHour(clock) {
+  const duration = moment.duration(clock)
+  return timeToHours(duration);
 }
 
 function formatHour(hour) {
@@ -108,12 +117,31 @@ class Availability extends Component {
     )
   }
 
-  focusOnBetween() {
+  shading() {
     const { active, between } = this.props;
+    const [shadeStartHour, shadeEndHour] = between.map(getHour);
+    let shades = [];
     if (active) {
-      // TODO
+      if (shadeStartHour > START_HOUR) {
+        const left = scaleHours(START_HOUR);
+        const width = scaleHours(shadeStartHour) - left;
+        shades.push((
+          <div key="before" className="shade shade-before" style={{ left: perc(left), width: perc(width) }} />
+        ));
+      }
+      if (shadeEndHour < END_HOUR) {
+        const left = scaleHours(shadeEndHour);
+        const width = scaleHours(END_HOUR) - left;
+        shades.push((
+          <div key="after" className="shade shade-after" style={{ left: perc(left), width: perc(width) }} />
+        ));
+      }
     }
-    return null;
+    return (
+      <div className="shading">
+        {shades}
+      </div>
+    );
   }
 
   render() {
@@ -123,7 +151,7 @@ class Availability extends Component {
           {this.availableIntervals()}
           {this.bookings()}
           {this.ticks()}
-          {this.focusOnBetween()}
+          {this.shading()}
         </div>
       </div>
     )
