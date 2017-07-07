@@ -15,6 +15,24 @@ import {
   fetchBookings
 } from '../actions';
 
+// these conversions need to be done for the DayPicker component
+// as it works with Date objects and only with local timezone
+
+function fromLocalDate(date) {
+  const format = "YYYY-MM-DD";
+  const localDate = moment(date).local().format(format);
+  return moment(localDate, format).startOf("day");
+}
+
+function toLocalDate(date) {
+  const londonDate = moment(date);
+  return new Date(
+    londonDate.year(),
+    londonDate.month(),
+    londonDate.date()
+  );
+}
+
 const Search = ({
   active,
   date,
@@ -129,7 +147,7 @@ const Search = ({
     <div className="calendar">
       <DayPicker
         onDayClick={selectDate}
-        selectedDays={[date.toDate()]}
+        selectedDays={[toLocalDate(date)]}
         enableOutsideDays
         firstDayOfWeek={1}
       />
@@ -148,7 +166,7 @@ const mapStateToProps = ({ active, date, between }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     selectDate: (date) => {
-      date = moment(date).startOf("day");
+      date = fromLocalDate(date);
       dispatch(searchDate(date));
       dispatch(fetchBookings(date));
     },
