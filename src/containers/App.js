@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Rooms from './Rooms';
 import Search from './Search';
+import Legend from '../components/Legend';
 
 import './App.css';
 
@@ -24,6 +25,8 @@ class App extends Component {
           </div> :
           null
         }
+
+        <Legend />
 
         <Rooms />
 
