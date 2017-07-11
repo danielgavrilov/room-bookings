@@ -122,14 +122,14 @@ class Availability extends Component {
     const [shadeStartHour, shadeEndHour] = between.map(getHour);
     let shades = [];
     if (active) {
-      if (shadeStartHour > START_HOUR) {
+      if (shadeStartHour >= START_HOUR) {
         const left = scaleHours(START_HOUR);
         const width = scaleHours(shadeStartHour) - left;
         shades.push((
           <div key="before" className="shade shade-before" style={{ left: perc(left), width: perc(width) }} />
         ));
       }
-      if (shadeEndHour < END_HOUR) {
+      if (shadeEndHour <= END_HOUR) {
         const left = scaleHours(shadeEndHour);
         const width = scaleHours(END_HOUR) - left;
         shades.push((
