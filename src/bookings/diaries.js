@@ -10,7 +10,7 @@ import {
   DEFAULT_ROOM_CLOSING,
   LATEST_OPENING,
   EARLIEST_CLOSING
-} from '../config.js';
+} from '../config';
 
 const reClosed = /(UCL|Room|Rm\.)\sClosed/i;
 

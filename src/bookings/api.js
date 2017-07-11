@@ -4,7 +4,7 @@ import axios from 'axios';
 import {
   API_BASE_URL,
   API_TOKEN
-} from '../config.js';
+} from '../config';
 
 function get(url, params) {
   return axios.get(API_BASE_URL + url, {

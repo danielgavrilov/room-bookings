@@ -10,7 +10,7 @@ import {
   CACHE_DEFAULT_MINUTES,
   CACHE_TODAY_MINUTES,
   NO_DATA_ERROR_MESSAGE
-} from '../config.js';
+} from '../config';
 
 const cache = {};
 

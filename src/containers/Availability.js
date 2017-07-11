@@ -10,7 +10,7 @@ import { clamp } from '../utils/general';
 import {
   START_HOUR,
   END_HOUR
-} from '../config.js';
+} from '../config';
 
 const unitClamp = clamp(0, 1);
 
